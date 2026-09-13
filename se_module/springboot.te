@@ -24,7 +24,7 @@
 #
 ############################################################################
 
-policy_module(springboot, 1.5.1)
+policy_module(springboot, 1.5.2)
 
 ########################################
 #
@@ -195,6 +195,7 @@ ifdef(`distro_redhat',`
 	type	sysadm_t;
 	type	logadm_t;
 	type	webadm_t;
+	type	secadm_t;
 
 	role	system_r;
 	
@@ -516,7 +517,7 @@ allow	webadm_t	springboot_file_type:notdevfile_class_set	getattr;
 allow	webadm_t	springboot_file_type:lnk_file				read_lnk_file_perms;
 
 allow	webadm_t	springboot_unit_file_t:file		read_file_perms;
-allow	webadm_t	springboot_unit_file_t:service	{ stop start status };
+allow	webadm_t	springboot_unit_file_t:service	{ stop start status reload };
 
 if	(allow_webadm_read_springboot_files)	{
 	allow	webadm_t	springboot_conf_t:file	read_file_perms;
@@ -536,4 +537,26 @@ allow	logadm_t	springboot_file_type:lnk_file				read_lnk_file_perms;
 allow	logadm_t	springboot_log_t:dir		{ list_dir_perms del_entry_dir_perms delete_dir_perms create_dir_perms reparent };
 allow	logadm_t	springboot_log_t:file		{ delete_file_perms rename_file_perms };
 
+allow	logadm_t	springboot_unit_file_t:service	status;
+
 filetrans_add_pattern(logadm_t,	springboot_log_t, springboot_log_t, dir)
+
+#
+##	Permissions for security admins (secadm_t)
+#
+
+allow	secadm_t	springboot_file_type:dir					list_dir_perms;
+allow	secadm_t	springboot_file_type:notdevfile_class_set	{ getattr setattr relabelto };
+allow	secadm_t	springboot_file_type:lnk_file				read_lnk_file_perms;
+
+allow	secadm_t	springboot_conf_t:file		read_file_perms;
+allow	secadm_t	springboot_var_t:file		read_file_perms;
+allow	secadm_t	springboot_run_t:file		read_file_perms;
+allow	secadm_t	springboot_tmp_t:file		read_file_perms;
+allow	secadm_t	springboot_lib_t:file		read_file_perms;
+allow	secadm_t	springboot_dynlib_t:file	read_file_perms;
+allow	secadm_t	springboot_log_t:file		read_file_perms;
+allow	secadm_t	springboot_exec_t:file		read_file_perms;
+
+allow	secadm_t	springboot_unit_file_t:file		read_file_perms;
+allow	secadm_t	springboot_unit_file_t:service	status;

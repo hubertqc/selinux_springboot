@@ -126,7 +126,7 @@ jobs:
       sftp_password: ${{ secrets.SSH_OVH_PASSWORD }}
     with:
       build_distro: debian
-      build_distro_versions: '[ "11", "12", "13" ]'
+      build_distro_versions: '[ "12", "13" ]'
       build_material_dir: dpkg
       release_upload_url: ${{ needs.get_release_info.outputs.upload_url }}
       package_version: ${{ needs.get_release_info.outputs.version_number }}-${{ needs.get_release_info.outputs.release_number }}
