@@ -26,7 +26,7 @@
 ############################################################################
 
 
-/(lib|etc)/systemd/system/springboot@?.*			gen_context(system_u:object_r:springboot_unit_file_t,s0)
+/(lib|etc|run)/systemd/system/springboot@?.*		gen_context(system_u:object_r:springboot_unit_file_t,s0)
 #
 /run/springboot(/.*)?								gen_context(system_u:object_r:springboot_run_t,s0)
 #
@@ -40,10 +40,7 @@
 /srv/springboot/(.*/)?(cache|run|work)(/.*)?			gen_context(system_u:object_r:springboot_run_t,s0)
 /srv/springboot/(.*/)?dyn(lib|app)(/.*)?				gen_context(system_u:object_r:springboot_dynlib_t,s0)
 /srv/springboot/(.*/)?.*\.(so|jar)([\.p-][0-9]+)*	--	gen_context(system_u:object_r:springboot_dynlib_t,s0)
-/srv/springboot/(.*/)?(conf|properties)(/.*)?								gen_context(system_u:object_r:springboot_conf_t,s0)
-/srv/springboot/(.*/)?(conf|properties)?/.*\.(jks|jceks|p12|pkcs12)		--	gen_context(system_u:object_r:springboot_auth_t,s0)
-/srv/springboot/(.*/)?keys(/.*)?											gen_context(system_u:object_r:springboot_auth_t,s0)
-/srv/springboot/(.*/)?(lib|app)(/.*)?										gen_context(system_u:object_r:springboot_lib_t,s0)
+/srv/springboot/(.*/)?(lib|app)(/.*)?					gen_context(system_u:object_r:springboot_lib_t,s0)
 #
 /opt/springboot(/.*)?														gen_context(system_u:object_r:springboot_bin_t,s0)
 /opt/springboot/bin/springboot_service									--	gen_context(system_u:object_r:springboot_exec_t,s0)
@@ -51,9 +48,10 @@
 /opt/springboot/service(/.*)?												gen_context(system_u:object_r:springboot_exec_t,s0)
 /opt/springboot/(.*/)?.*\.(so|jar)([\.p-][0-9]+)*						--	gen_context(system_u:object_r:springboot_lib_t,s0)
 /opt/springboot/(.*/)?env(.*/)?												gen_context(system_u:object_r:springboot_conf_t,s0)
-/opt/springboot/(.*/)?(conf|properties)(/.*)?								gen_context(system_u:object_r:springboot_conf_t,s0)
-/opt/springboot/(.*/)?(conf|properties)?/.*\.(jks|jceks|p12|pkcs12)		--	gen_context(system_u:object_r:springboot_auth_t,s0)
-/opt/springboot/(.*/)?keys(/.*)?											gen_context(system_u:object_r:springboot_auth_t,s0)
 /opt/springboot/(.*/)?(lib|app)(/.*)?										gen_context(system_u:object_r:springboot_lib_t,s0)
 /opt/springboot/(.*/)?bin(/.*)?												gen_context(system_u:object_r:springboot_bin_t,s0)
 /opt/springboot/(.*/)?run(/.*)?												gen_context(system_u:object_r:springboot_run_t,s0)
+#
+/(srv|opt)/springboot/(.*/)?(conf|properties)(/.*)?									gen_context(system_u:object_r:springboot_conf_t,s0)
+/(srv|opt)/springboot/(.*/)?(conf|properties)?/.*\.(jks|jceks|p12|pkcs12)		--	gen_context(system_u:object_r:springboot_auth_t,s0)
+/(srv|opt)/springboot/(.*/)?keys(/.*)?												gen_context(system_u:object_r:springboot_auth_t,s0)
