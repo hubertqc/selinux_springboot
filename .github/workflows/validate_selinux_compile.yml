@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        debian_vers: [ '11', '12', '13' ]
+        debian_vers: [ '12', '13' ]
     steps:
       - name: Checkout SELinux code
         uses: actions/checkout@master
